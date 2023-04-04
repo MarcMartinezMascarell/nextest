@@ -1,0 +1,14 @@
+[
+    {
+        "title": "This is a public article",
+        "mustBeLoggedIn": false
+    },
+    {
+        "title": "This is the second public article",
+        "mustBeLoggedIn": false
+    },
+    {
+        "title": "This is a private article",
+        "mustBeLoggedIn": true
+    }
+]
