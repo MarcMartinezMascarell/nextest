@@ -1,0 +1,9 @@
+{
+    "name": "Mukesh",
+    "age": 25,
+    "address": {
+        "city": "Delhi",
+        "state": "Delhi",
+        "country": "India"
+    }
+}

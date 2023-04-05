@@ -1,65 +1,42 @@
 import { AuthContext } from "@/context/authContext";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
 export const useUser = () => {
-  const { authContext, setAuthContext } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const session = useLocalStorage("isLoggedIn", "false");
-  const name = useLocalStorage("name", "");
-
-  useEffect(() => {
-    const isLoggedIn = session.storedValue;
-    if (isLoggedIn != undefined) {
-      setAuthContext({
-        ...authContext,
-        username: name.storedValue,
-        isLoggedIn: isLoggedIn,
-      })
-    }
-  }, []);
-
-  const getUsername = () => {
-    return authContext.username;
-  };
-
-  const getIsLoggedIn = () => {
-    return authContext.isLoggedIn === "true";
-  };
-
-  const getSToken = () => {
-    return authContext.sToken;
-  };
+  const user = useLocalStorage("user", {});
 
   const logout = () => {
-    setAuthContext({
-        username: "",
-        isLoggedIn: "false",
+    setAuth({
+        isLoggedIn: false,
+        user: {},
         sToken: "",
     });
-    session.setValue("false");
+    session.setValue(false);
+    user.setValue({});
   }
 
   const setUserSession = (isLoggedIn) => {
-    setAuthContext({
-      ...authContext,
+    setAuth({
+      ...auth,
       isLoggedIn: isLoggedIn,
     });
     session.setValue(isLoggedIn);
   };
 
-  const setUserInfo = (username, isLoggedIn, sToken) => {
-    setAuthContext({
-      username: username,
+  const setUserInfo = (user, isLoggedIn, sToken) => {
+    setAuth({
+      user: user,
       isLoggedIn: isLoggedIn,
       sToken: sToken,
     });
     session.setValue(isLoggedIn);
+    user.setValue(user);
   };
 
   return {
-    getUsername,
-    getIsLoggedIn,
-    getSToken,
+    auth,
     logout,
     setUserSession,
     setUserInfo,

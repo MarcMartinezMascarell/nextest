@@ -6,7 +6,7 @@ import ErrorMessage from '@/components/errorMessage.js'
 
 export default function LoginForm({setToken}) {
     const [error, setError] = useState('')
-    const { setValue } = useLocalStorage('username', '')
+    const { setValue } = useLocalStorage('user', {})
 
     const handleOnSubmit = (event) => {
         event.preventDefault()
@@ -33,9 +33,8 @@ export default function LoginForm({setToken}) {
 
             if(error) setError(data.message)
             else {
-                console.log(data)
                 setToken(data.token)
-                setValue(data.name)
+                setValue(JSON.stringify(data.user))
             }
         })
         .catch((error) => {

@@ -3,21 +3,23 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/authContext";
 import { useUser } from "@/hooks/useUser";
 
+
 export default function Dashboard() {
-  const { authContext } = useContext(AuthContext);
+  const { auth } = useUser();
   const router = useRouter();
 
   useEffect(() => {
+    console.log(auth);
     //if (localStorage.getItem("isLoggedIn") != "true") router.push("/login");
-    if(authContext.isLoggedIn != "true") router.push("/login")
-  }, [authContext]);
+    if(!auth.isLoggedIn) router.push("/login")
+    
+  }, [auth]);
 
-  const { getUsername } = useUser();
 
   return (
     <div>
       <h1>Dashboard</h1>
-      <h2>Welcome {getUsername()}</h2>
+      <h2>Welcome {auth.user?.name}</h2>
     </div>
   );
 }

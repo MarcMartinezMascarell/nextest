@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-    const response = await fetch('http://localhost:3001/dev/validateToken', {
+    await fetch('http://localhost:3001/dev/validateToken', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ export default function TwoFactor({ token }) {
   const router = useRouter();
 
   const [error, setError] = useState("");
-  const { setUserInfo } = useUser();
+  const { auth, setUserSession } = useUser();
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -35,7 +35,7 @@ export default function TwoFactor({ token }) {
           setError(data.message);
         } else {
           const data = await response.json();
-          setUserSession("true");
+          setUserSession(true);
           router.push("/dashboard");
         }
       })

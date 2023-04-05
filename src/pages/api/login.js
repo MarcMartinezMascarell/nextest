@@ -5,10 +5,7 @@ const getSessionToken = () => {
 };
 
 export default async function handler(req, res) {
-  const user = users.find(
-    (user) =>
-      user.username === req.body.username && user.password === req.body.password
-  );
+  const user = users.find((user) => user.username === req.body.username && user.password === req.body.password );
 
   if (!user)
     return res.status(401).json({ message: "Invalid username or password" });
@@ -27,6 +24,6 @@ export default async function handler(req, res) {
     }),
   })
     .then((res) => res.json())
-    .then((data) => res.status(200).json({ token: data.token, name: user.name }))
+    .then((data) => res.status(200).json({ token: data.token, user: user }))
     .catch((error) => res.status(500).end({ message: error }));
 }
