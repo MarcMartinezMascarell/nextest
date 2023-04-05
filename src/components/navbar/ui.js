@@ -9,7 +9,7 @@ export default function NavbarUI({ isLoggedIn, user, logoutUser, loginUser }) {
         
       </div>
       <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
-      <Link href={`/${isLoggedIn}`}>{user?.name}</Link>
+      <Link href={`/${user?.username}`}>{user?.name}</Link>
         <button
           style={{ cursor: "pointer", padding: "5px 10px" }}
           onClick={isLoggedIn ? logoutUser : loginUser}

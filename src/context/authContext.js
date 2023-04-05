@@ -1,27 +1,18 @@
+import { useUser } from "@/hooks/useUser";
 import { createContext, useEffect, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export default function AuthContextProvider({ children }) {
-  const session = useLocalStorage("isLoggedIn", "false");
-  const user = useLocalStorage("user", {});
-  const [auth, setAuth] = useState({
+  const { storedValue, setValue} = useLocalStorage("session", {
     isLoggedIn: false,
-    user: {},
+    user: null,
     stoken: null,
   });
 
-  useEffect(() => {
-    setAuth({
-      isLoggedIn: (session.storedValue === "true" ? true : false),
-      user: user.storedValue,
-    });
-  }, [session.storedValue, user.storedValue]);
-
-
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ session: storedValue,  setSession: setValue}}>
       {children}
     </AuthContext.Provider>
   );

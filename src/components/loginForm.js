@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { useUser } from '@/hooks/useUser'
 
 import loginStyles from '@/styles/Login.module.css'
 import ErrorMessage from '@/components/errorMessage.js'
 
 export default function LoginForm({setToken}) {
     const [error, setError] = useState('')
-    const { setValue } = useLocalStorage('user', {})
+    const { setUserInfo } = useUser();
 
     const handleOnSubmit = (event) => {
         event.preventDefault()
@@ -34,7 +34,7 @@ export default function LoginForm({setToken}) {
             if(error) setError(data.message)
             else {
                 setToken(data.token)
-                setValue(JSON.stringify(data.user))
+                setUserInfo(data.user)
             }
         })
         .catch((error) => {

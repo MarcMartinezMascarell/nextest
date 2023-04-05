@@ -1,10 +1,13 @@
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import NavbarUI from "./ui";
+import dynamic from "next/dynamic";
+const NavbarUI = dynamic(() => import("./ui"), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
 
 export default function Navbar() {
-  const { auth, logout } = useUser();
+  const { session, logout } = useUser();
   const router = useRouter();
 
   const logoutUser = () => {
@@ -16,12 +19,12 @@ export default function Navbar() {
     router.push("/login");
   };
 
-  if(!auth) return null; 
+  if(!session) return null; 
 
   return (
     <NavbarUI
-      isLoggedIn={auth?.isLoggedIn}
-      user={auth?.user}
+      isLoggedIn={session?.isLoggedIn}
+      user={session?.user}
       logoutUser={logoutUser}
       loginUser={loginUser}
     />

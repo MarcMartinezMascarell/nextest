@@ -6,22 +6,28 @@ export const useLocalStorage = (key, initialValue) => {
             return initialValue;
         }
         try {
-            const item = window.localStorage.getItem(key)
-            //...
-            return item ? JSON.parse(item) : initialValue
+            let item = window.localStorage.getItem(key);
+            item = JSON.parse(item)
+            if(item.hasOwnProperty("value") && Object.keys(item).length === 1) {
+                return item.value
+            }
+            return item ? item : initialValue
         } catch (error) {
-            console.log(error)
+            console.error(error)
             return initialValue
         }
     });
 
     const setValue = (value) => {
         try {
-            const valueToStore = value instanceof Function ? value(storedValue) : value
+            let valueToStore = value instanceof Function ? value(storedValue) : value
             setStoredValue(valueToStore)
             if (typeof window !== "undefined") {
-                //check if string -> create object with value
-                // -> stringify
+                if(typeof valueToStore !== "Object") {
+                    valueToStore = JSON.stringify({value: valueToStore})
+                } else {
+                    valueToStore = JSON.stringify(valueToStore)
+                }
                 window.localStorage.setItem(key, valueToStore);
               }
         } catch (error) {

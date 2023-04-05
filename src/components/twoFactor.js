@@ -9,7 +9,7 @@ export default function TwoFactor({ token }) {
   const router = useRouter();
 
   const [error, setError] = useState("");
-  const { auth, setUserSession } = useUser();
+  const { setUserSession } = useUser();
 
   const handleOnSubmit = (event) => {
     event.preventDefault();

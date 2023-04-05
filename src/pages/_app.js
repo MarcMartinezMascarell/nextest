@@ -5,7 +5,7 @@ import Navbar from '@/components/navbar'
 export default function App({ Component, pageProps }) {
   return (
     <AuthProvider>
-      {Component.name !== "Login" && Component.name !== "Register" && <Navbar />}
+      <Navbar />
       <Component {...pageProps} />
     </AuthProvider>
   )

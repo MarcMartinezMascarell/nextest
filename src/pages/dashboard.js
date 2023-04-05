@@ -1,25 +1,35 @@
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/context/authContext";
+import dynamic from "next/dynamic";
 import { useUser } from "@/hooks/useUser";
+import { useEffect } from "react";
 
+import { WelcomeLoading } from "@/components/welcome";
+const Welcome = dynamic(() => import("../components/welcome"), {
+  loading: () => <WelcomeLoading />,
+  ssr: false,
+});
 
 export default function Dashboard() {
-  const { auth } = useUser();
+  const { session, logout } = useUser();
   const router = useRouter();
 
+  //If user is not logged in, redirect to login page with useEffect
   useEffect(() => {
-    console.log(auth);
-    //if (localStorage.getItem("isLoggedIn") != "true") router.push("/login");
-    if(!auth.isLoggedIn) router.push("/login")
-    
-  }, [auth]);
+    if (!session?.isLoggedIn) {
+      router.push("/login");
+    }
+  }, [session]);
 
+  const logoutUser = () => {
+    logout();
+    router.push("/login");
+  };
 
   return (
     <div>
       <h1>Dashboard</h1>
-      <h2>Welcome {auth.user?.name}</h2>
+      <Welcome username={session.user?.name} />
+      <button onClick={logoutUser}>Logout</button>
     </div>
   );
 }
