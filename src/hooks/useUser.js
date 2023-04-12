@@ -12,10 +12,11 @@ export const useUser = () => {
     })
   }
 
-  const setUserSession = (isLoggedIn) => {
+  const setUserSession = (isLoggedIn, sToken) => {
     setSession({
       ...session,
       isLoggedIn: isLoggedIn,
+      stoken: sToken
     })
   };
 

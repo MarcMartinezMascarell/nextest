@@ -35,12 +35,13 @@ export default function TwoFactor({ token }) {
           setError(data.message);
         } else {
           const data = await response.json();
-          setUserSession(true);
+          console.log(data)
+          setUserSession(true, data.result.metadata.sToken);
           router.push("/dashboard");
         }
       })
       .catch((error) => {
-        console.log("Error");
+        console.error(error);
         setError(error);
       });
   };
